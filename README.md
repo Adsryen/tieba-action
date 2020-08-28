@@ -1,5 +1,9 @@
 # 贴吧签到Github Action版
 
+
+fork至： https://github.com/ghosx/tieba
+
+
 ## 今日签到状态
 
 ![Baidu Tieba Auto Sign](https://github.com/ghosx/tieba/workflows/Baidu%20Tieba%20Auto%20Sign/badge.svg)
@@ -26,9 +30,5 @@
 
 ![修改workflow](assets/check.png)
 
-## 讨论群
 
-TG： https://t.me/tiebasign
-
-qq群： 818794879
 

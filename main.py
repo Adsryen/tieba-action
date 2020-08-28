@@ -177,6 +177,7 @@ def main():
             client_sign(i, tbs, j["id"], j["name"])
         logger.info("完成第" + str(n) + "个用户签到")
     logger.info("所有用户签到结束")
+    requests.get('https://sc.ftqq.com/SCU74663T20ed2886a458ab9e3be21f3de4e8fd965e0b13de3ff1b.send?text=贴吧签到')
 
 
 if __name__ == '__main__':
