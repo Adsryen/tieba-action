@@ -184,13 +184,13 @@ def main():
         signLog += "### ✨第" + str(n+1) + "个用户签到：\n```"
         for j in favorites:
             client_sign(i, tbs, j["id"], j["name"])
-        signLog += "```"
+        signLog += "```\n"
         logger.info("完成第" + str(n+1) + "个用户签到")
     logger.info("所有用户签到结束")
     now_time = datetime.datetime.now()
     bj_time = now_time + datetime.timedelta(hours=8)
     requests.post('https://sc.ftqq.com/SCU74663T20ed2886a458ab9e3be21f3de4e8fd965e0b13de3ff1b.send', data={
-    'text':bj_time.strftime("%Y-%m-%d %H:%M:%S %p")+'网易云打卡',
+    'text':bj_time.strftime("%Y-%m-%d %H:%M:%S %p")+'百度贴吧签到',
     'desp':signLog
 })
 
