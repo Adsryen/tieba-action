@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import os
+import datetime
 import requests
 import hashlib
 import time
@@ -44,6 +45,7 @@ KW = "kw"
 
 s = requests.Session()
 
+signLog = ""
 
 def get_tbs(bduss):
     logger.info("获取tbs开始")
@@ -158,26 +160,39 @@ def encodeData(data):
 
 
 def client_sign(bduss, tbs, fid, kw):
+    global signLog
     # 客户端签到
     logger.info("开始签到贴吧：" + kw)
     data = copy.copy(SIGN_DATA)
     data.update({BDUSS: bduss, FID: fid, KW: kw, TBS: tbs, TIMESTAMP: str(int(time.time()))})
     data = encodeData(data)
     res = s.post(url=SIGN_URL, data=data, timeout=5).json()
+    if res['error_code']=='0':
+        signLog+= kw+'吧签到成功,获得经验+'+res['user_info']['sign_bonus_point']+'\n'
+    else:
+        signLog+= kw+'吧签到状态:'+res['error_msg']+'\n'
     return res
 
 
 def main():
+    global signLog
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
-        logger.info("开始签到第" + str(n) + "个用户")
+        logger.info("开始签到第" + str(n+1) + "个用户")
         tbs = get_tbs(i)
         favorites = get_favorite(i)
+        signLog += "### ✨第" + str(n+1) + "个用户签到：\n```"
         for j in favorites:
             client_sign(i, tbs, j["id"], j["name"])
-        logger.info("完成第" + str(n) + "个用户签到")
+        signLog += "```"
+        logger.info("完成第" + str(n+1) + "个用户签到")
     logger.info("所有用户签到结束")
-    requests.get('https://sc.ftqq.com/SCU74663T20ed2886a458ab9e3be21f3de4e8fd965e0b13de3ff1b.send?text=贴吧签到')
+    now_time = datetime.datetime.now()
+    bj_time = now_time + datetime.timedelta(hours=8)
+    requests.post('https://sc.ftqq.com/SCU74663T20ed2886a458ab9e3be21f3de4e8fd965e0b13de3ff1b.send', data={
+    'text':bj_time.strftime("%Y-%m-%d %H:%M:%S %p")+'网易云打卡',
+    'desp':signLog
+})
 
 
 if __name__ == '__main__':
