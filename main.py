@@ -181,7 +181,7 @@ def main():
         logger.info("开始签到第" + str(n+1) + "个用户")
         tbs = get_tbs(i)
         favorites = get_favorite(i)
-        signLog += "### ✨第" + str(n+1) + "个用户签到：\n```"
+        signLog += "### ✨第" + str(n+1) + "个用户签到：\n```\n"
         for j in favorites:
             client_sign(i, tbs, j["id"], j["name"])
         signLog += "```\n"
